@@ -10,7 +10,7 @@ app.use(express.urlencoded({
 }));
 
 const corsOptions = {
-    origin: 'http://localhost:8080',
+    origin: '*',
     optionsSuccessStatus: 200
 }
 
@@ -18,6 +18,7 @@ app.use(cors(corsOptions));
 
 require('./config/db.js');
 
+require('./route.js')(app);
 
 app.listen(port, () => {
     console.log('Server app listening on port ' + port);
