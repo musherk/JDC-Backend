@@ -77,24 +77,41 @@ exports.deleteLesson = (req, res) => {
 exports.updateLesson = (req, res) => {
     let { name, teacher_id } = req.body;
     let id = req.params.id;
-    let lesson = new Lesson(name, teacher_id);
-    Lesson.updateLesson(id, lesson, (err, data) => {
+    Teacher.getTeacherById(teacher_id, (err, data) => {
         if (err) {
             res.status(500).send({
                 message: "Une erreur s'est produite au niveau du serveur !",
                 status: 500
             });
         } else {
-            if (data.affectedRows) {
-                res.status(201).send({
-                    message: "Modification effectuée avec succès",
-                    status: 201
-                });
+            if (data) {
+                let lesson = new Lesson(name, teacher_id);
+                Lesson.updateLesson(id, lesson, (err, data) => {
+                    if (err) {
+                        res.status(500).send({
+                            message: "Une erreur s'est produite au niveau du serveur !",
+                            status: 500
+                        });
+                    } else {
+                        if (data.affectedRows) {
+                            res.status(201).send({
+                                message: "Modification effectuée avec succès",
+                                status: 201
+                            });
+                        } else {
+                            res.status(404).send({ message: `Le cours avec l'id '${id}' n'existe pas !`, status: 404 });
+                        }
+                    }
+                })
             } else {
-                res.status(404).send({ message: `Le cours avec l'id '${id}' n'existe pas !`, status: 404 });
+                res.status(404).send({
+                    message: `Le cours n'a pas été modifié car le professeur avec l'id '${teacher_id}' n'existe pas !`,
+                    status: 404
+                });
             }
         }
-    })
+    });
+
 }
 
 /**

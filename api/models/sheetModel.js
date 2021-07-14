@@ -20,6 +20,18 @@ class Sheet {
         );
     }
 
+    static getSheetByLesson(lesson_id, result) {
+        db.query(
+            'SELECT * FROM sheets WHERE lesson_id = ?', [lesson_id], (err, data) => {
+                if (err) {
+                    result(err, null)
+                } else {
+                    result(null, data);
+                }
+            }
+        );
+    }
+
     static deleteSheet(id, result) {
         db.query("DELETE FROM sheets WHERE id = ?", [id], (err, data) => {
             if (err) {

@@ -29,6 +29,18 @@ class Lesson {
         });
     }
 
+    static getLessonByName(name, result) {
+        db.query(
+            'SELECT * FROM lessons WHERE name = ?', [name], (err, data) => {
+                if (err) {
+                    result(err, null);
+                } else {
+                    result(null, data[0]);
+                }
+            }
+        );
+    }
+
 
     static getLessonById(id, result) {
         db.query(

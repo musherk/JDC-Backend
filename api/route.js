@@ -24,6 +24,7 @@ module.exports = (app) => {
 
     app.get('/api/sheets', sheets.getSheets);
     app.get('/api/sheets/:id', sheets.getSheet);
+    app.get('/api/sheets/lesson/:lesson', sheets.getSheetsByLesson)
     app.post('/api/sheets', sheets.saveSheet);;
     app.delete('/api/sheets/:id', sheets.deleteSheet);
     app.put('/api/sheets/:id', sheets.updateSheet);
