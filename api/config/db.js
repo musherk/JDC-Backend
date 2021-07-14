@@ -5,11 +5,11 @@ var conn = mysql.createConnection({
     password: '',
     database: 'jdc_db'
 });
-conn.connect(function(err) {
+conn.connect((err) => {
     if (!err) {
-        console.log('Connection established');
+        console.log('Database connection is established');
     } else {
-        console.log('Connection is not established !')
+        console.log('Database connection is not established !')
     }
 });
 module.exports = conn;

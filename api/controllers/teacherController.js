@@ -41,7 +41,7 @@ exports.getTeacher = (req, res) => {
                 });
             }
         }
-    })
+    });
 }
 
 /**
@@ -69,7 +69,7 @@ exports.deleteTeacher = (req, res) => {
 
 /**
  * Modifier les données d'un professeur à l'aide de son identifiant 
- * et des données à modifier
+ * et des données du professeur à modifier
  * @param {*} req 
  * @param {*} res 
  */
@@ -96,7 +96,11 @@ exports.updateTeacher = (req, res) => {
     })
 }
 
-
+/**
+ * Sauvegarder un professeur
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.saveTeacher = (req, res) => {
     let name = req.body.name;
     if (!name) {
