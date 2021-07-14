@@ -51,7 +51,7 @@ exports.getSheet = (req, res) => {
  */
 exports.getSheetsByLesson = (req, res) => {
     let lesson = req.params.lesson;
-    Lesson.getLessonByName(lesson, (err, data) => {
+    Lesson.getLessonsByName(lesson, (err, data) => {
         if (err) {
             res.status(500).send({
                 message: "Une erreur s'est produite au niveau du serveur !",

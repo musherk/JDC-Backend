@@ -7,6 +7,10 @@ class Lesson {
         this.teacher_id = teacher_id;
     }
 
+    /**
+     * get all lessons
+     * @param {*} result is a callback
+     */
     static getLessons(result) {
         db.query(
             'SELECT * FROM lessons', (err, data) => {
@@ -19,6 +23,11 @@ class Lesson {
         );
     }
 
+    /**
+     * Delete a lesson
+     * @param {*} id the id of the lesson to delete
+     * @param {*} result result is a callback
+     */
     static deleteLesson(id, result) {
         db.query("DELETE FROM lessons WHERE id = ?", [id], (err, data) => {
             if (err) {
@@ -29,7 +38,12 @@ class Lesson {
         });
     }
 
-    static getLessonByName(name, result) {
+    /**
+     * get lessons by name
+     * @param {*} name the name of the lesson 
+     * @param {*} result result is the callback
+     */
+    static getLessonsByName(name, result) {
         db.query(
             'SELECT * FROM lessons WHERE name = ?', [name], (err, data) => {
                 if (err) {
@@ -42,6 +56,11 @@ class Lesson {
     }
 
 
+    /**
+     * get lesson by id
+     * @param {*} id 
+     * @param {*} result 
+     */
     static getLessonById(id, result) {
         db.query(
             'SELECT * FROM lessons WHERE id = ?', [id], (err, data) => {
@@ -55,6 +74,10 @@ class Lesson {
     }
 
 
+    /**
+     * save a lesson
+     * @param {*} result 
+     */
     saveLesson(result) {
         db.query('INSERT INTO lessons SET ?', [this], (err, data) => {
             if (err) {
@@ -65,6 +88,12 @@ class Lesson {
         });
     }
 
+    /**
+     * update a lesson
+     * @param {*} id 
+     * @param {*} lesson 
+     * @param {*} result 
+     */
     static updateLesson(id, lesson, result) {
         db.query("UPDATE lessons SET ? WHERE id = ?", [lesson, id], (err, data) => {
             if (err) {
