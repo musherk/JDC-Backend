@@ -111,9 +111,9 @@ exports.deleteSheet = (req, res) => {
  * @param {*} res 
  */
 exports.updateSheet = (req, res) => {
-    let { local_number, description, lesson_id } = req.body;
+    let { local_number, description, lesson_id, teacher_id } = req.body;
     let id = req.params.id;
-    let sheet = new Sheet(local_number, description, lesson_id);
+    let sheet = new Sheet(local_number, description, lesson_id, teacher_id);
     Lesson.getLessonById(lesson_id, (err, data) => {
         if (err) {
             res.status(500).send({
@@ -152,7 +152,7 @@ exports.updateSheet = (req, res) => {
  * @param {*} res 
  */
 exports.saveSheet = (req, res) => {
-    let { local_number, description, lesson_id } = req.body;
+    let { local_number, description, lesson_id, teacher_id } = req.body;
     Lesson.getLessonById(lesson_id, (err, data) => {
         if (err) {
             res.status(500).send({
@@ -161,7 +161,7 @@ exports.saveSheet = (req, res) => {
             });
         } else {
             if (data) {
-                const sheet = new Sheet(local_number, description, lesson_id);
+                const sheet = new Sheet(local_number, description, lesson_id, teacher_id);
                 sheet.saveSheet((err, data) => {
                     if (err) {
                         res.status(500).send({
@@ -171,7 +171,7 @@ exports.saveSheet = (req, res) => {
                     } else {
                         if (data.affectedRows) {
                             res.status(201).send({
-                                message: `La fiche a été ajouté !`,
+                                message: `La fiche a été ajoutée !`,
                                 status: 201
                             });
                         }

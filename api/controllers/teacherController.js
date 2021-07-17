@@ -1,3 +1,4 @@
+const Lesson = require("../models/lessonModel");
 const Teacher = require("../models/teacherModel")
 
 /**
@@ -51,20 +52,30 @@ exports.getTeacher = (req, res) => {
  */
 exports.deleteTeacher = (req, res) => {
     let id = req.params.id;
-    Teacher.deleteTeacher(id, (err, data) => {
+    Lesson.deleteLessonByTeacher(id, (err, data) => {
         if (err) {
             res.status(500).send({
                 message: "Une erreur s'est produite au niveau du serveur !",
                 status: 500
             });
         } else {
-            if (data.affectedRows != 0) {
-                res.status(200).send({ message: `Le professeur avec l'id '${id}' a été supprimé avec succès !`, status: 200 });
-            } else {
-                res.status(404).send({ message: `Le professeur avec l'id '${id}' n'existe pas !`, status: 404 });
-            }
+            Teacher.deleteTeacher(id, (err, data) => {
+                if (err) {
+                    res.status(500).send({
+                        message: "Une erreur s'est produite au niveau du serveur !",
+                        status: 500
+                    });
+                } else {
+                    if (data.affectedRows != 0) {
+                        res.status(200).send({ message: `Le professeur avec l'id '${id}' a été supprimé avec succès !`, status: 200 });
+                    } else {
+                        res.status(404).send({ message: `Le professeur avec l'id '${id}' n'existe pas !`, status: 404 });
+                    }
+                }
+            });
         }
     })
+
 }
 
 /**
@@ -79,10 +90,17 @@ exports.updateTeacher = (req, res) => {
     let teacher = new Teacher(name);
     Teacher.updateTeacher(id, teacher, (err, data) => {
         if (err) {
-            res.status(500).send({
-                message: "Une erreur s'est produite au niveau du serveur !",
-                status: 500
-            });
+            if (err.code === 'ER_DUP_ENTRY') {
+                res.status(409).send({
+                    message: "Ce professeur existe déjà !",
+                    status: 409
+                });
+            } else {
+                res.status(500).send({
+                    message: "Une erreur s'est produite au niveau du serveur !",
+                    status: 500
+                });
+            }
         } else {
             if (data.affectedRows) {
                 res.status(201).send({
@@ -108,10 +126,17 @@ exports.saveTeacher = (req, res) => {
     const teacher = new Teacher(name);
     teacher.saveTeacher((err, data) => {
         if (err) {
-            res.status(500).send({
-                message: "Une erreur s'est produite au niveau du serveur !",
-                status: 500
-            });
+            if (err.code === 'ER_DUP_ENTRY') {
+                res.status(409).send({
+                    message: "Ce professeur existe déjà !",
+                    status: 409
+                });
+            } else {
+                res.status(500).send({
+                    message: "Une erreur s'est produite au niveau du serveur !",
+                    status: 500
+                });
+            }
         } else {
             if (data.affectedRows) {
                 res.status(201).send({

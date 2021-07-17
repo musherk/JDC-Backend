@@ -23,6 +23,18 @@ class Lesson {
         );
     }
 
+    static getLessonsByTeacher(id, result) {
+        db.query(
+            'SELECT * FROM lessons WHERE teacher_id = ?', [id], (err, data) => {
+                if (err) {
+                    result(err, null)
+                } else {
+                    result(null, data);
+                }
+            }
+        );
+    }
+
     /**
      * Delete a lesson
      * @param {*} id the id of the lesson to delete
@@ -30,6 +42,21 @@ class Lesson {
      */
     static deleteLesson(id, result) {
         db.query("DELETE FROM lessons WHERE id = ?", [id], (err, data) => {
+            if (err) {
+                result(err, null)
+            } else {
+                result(null, data)
+            }
+        });
+    }
+
+    /**
+     * Delete all lessons by teacher identifier 
+     * @param {*} id the id of the lesson to delete
+     * @param {*} result result is a callback
+     */
+    static deleteLessonByTeacher(id, result) {
+        db.query("DELETE FROM lessons WHERE teacher_id = ?", [id], (err, data) => {
             if (err) {
                 result(err, null)
             } else {

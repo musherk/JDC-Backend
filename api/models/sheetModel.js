@@ -2,10 +2,11 @@ const db = require('../config/db.js');
 
 class Sheet {
 
-    constructor(local_number, description, lesson_id) {
+    constructor(local_number, description, lesson_id, teacher_id) {
         this.local_number = local_number;
         this.description = description;
         this.lesson_id = lesson_id;
+        this.teacher_id = teacher_id;
     }
 
     /**

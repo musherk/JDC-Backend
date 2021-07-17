@@ -45,6 +45,20 @@ exports.getLesson = (req, res) => {
     })
 }
 
+exports.getLessonsByTeacher = (req, res) => {
+    let id = req.params.id;
+    Lesson.getLessonsByTeacher(id, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message: "Une erreur s'est produite au niveau du serveur !",
+                status: 500
+            });
+        } else {
+            res.status(200).send(data);
+        }
+    })
+}
+
 /**
  * Supprimer un cours à l'aide de son identifiant
  * @param {*} req 
@@ -88,10 +102,17 @@ exports.updateLesson = (req, res) => {
                 let lesson = new Lesson(name, teacher_id);
                 Lesson.updateLesson(id, lesson, (err, data) => {
                     if (err) {
-                        res.status(500).send({
-                            message: "Une erreur s'est produite au niveau du serveur !",
-                            status: 500
-                        });
+                        if (err.code === 'ER_DUP_ENTRY') {
+                            res.status(409).send({
+                                message: "Ce cours existe déjà !",
+                                status: 409
+                            });
+                        } else {
+                            res.status(500).send({
+                                message: "Une erreur s'est produite au niveau du serveur !",
+                                status: 500
+                            });
+                        }
                     } else {
                         if (data.affectedRows) {
                             res.status(201).send({
@@ -138,10 +159,17 @@ exports.saveLesson = (req, res) => {
                 const lesson = new Lesson(name, teacher_id);
                 lesson.saveLesson((err, data) => {
                     if (err) {
-                        res.status(500).send({
-                            message: "Une erreur s'est produite au niveau du serveur !",
-                            status: 500
-                        });
+                        if (err.code === 'ER_DUP_ENTRY') {
+                            res.status(409).send({
+                                message: "Ce cours existe déjà !",
+                                status: 409
+                            });
+                        } else {
+                            res.status(500).send({
+                                message: "Une erreur s'est produite au niveau du serveur !",
+                                status: 500
+                            });
+                        }
                     } else {
                         if (data.affectedRows) {
                             res.status(201).send({
@@ -159,7 +187,4 @@ exports.saveLesson = (req, res) => {
             }
         }
     });
-
-
-
 };

@@ -14,6 +14,7 @@ module.exports = (app) => {
 
     app.get('/api/lessons', lessons.getLessons);
     app.get('/api/lessons/:id', lessons.getLesson);
+    app.get('/api/lessons/teacher/:id', lessons.getLessonsByTeacher);
     app.post('/api/lessons', lessons.saveLesson);;
     app.delete('/api/lessons/:id', lessons.deleteLesson);
     app.put('/api/lessons/:id', lessons.updateLesson);
