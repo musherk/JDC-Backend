@@ -1,5 +1,37 @@
 const Lesson = require("../models/lessonModel");
 const Sheet = require("../models/sheetModel");
+const Teacher = require("../models/teacherModel");
+
+/**
+ * Page permettant de lister les fiches
+ * @param {*} req 
+ * @param {*} res 
+ */
+exports.pageSheets = (req, res) => {
+    Sheet.getSheets((err, sheets) => {
+        if (err) {
+            res.status(500).send({
+                message: "Une erreur s'est produite au niveau du serveur !",
+                status: 500
+            });
+        } else {
+            Teacher.getTeachers((err, teachers) => {
+                if (err) {
+                    res.status(500).send({
+                        message: "Une erreur s'est produite au niveau du serveur !",
+                        status: 500
+                    });
+                } else {
+                    Lesson.getLessons((err, lessons) => {
+                        res.render('pages/sheets/sheetList', { sheets, teachers, lessons });
+                    })
+                }
+            })
+
+        }
+    })
+}
+
 /**
  * Récupérer la liste des fiches
  * @param {*} req 
