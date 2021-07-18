@@ -1,34 +1,6 @@
 const Lesson = require("../models/lessonModel");
 const Teacher = require("../models/teacherModel");
 
-
-/**
- * Page permettant de lister les cours
- * @param {*} req 
- * @param {*} res 
- */
-exports.pageLessons = (req, res) => {
-    Lesson.getLessons((err, lessons) => {
-        if (err) {
-            res.status(500).send({
-                message: "Une erreur s'est produite au niveau du serveur !",
-                status: 500
-            });
-        } else {
-            Teacher.getTeachers((err, teachers) => {
-                if (err) {
-                    res.status(500).send({
-                        message: "Une erreur s'est produite au niveau du serveur !",
-                        status: 500
-                    });
-                } else {
-                    res.render('pages/lessons/lessonList', { teachers, lessons });
-                }
-            })
-        }
-    })
-}
-
 /**
  * Récupérer la liste des cours
  * @param {*} req 

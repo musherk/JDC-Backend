@@ -8,7 +8,6 @@ module.exports = (app) => {
     /** Teacher */
     const teachers = require('./controllers/teacherController.js');
 
-    app.get('/teachers', teachers.pageTeachers);
     app.get('/api/teachers', teachers.getTeachers);
     app.get('/api/teachers/:id', teachers.getTeacher);
     app.post('/api/teachers', teachers.saveTeacher);;
@@ -17,7 +16,6 @@ module.exports = (app) => {
 
     /**Lesson */
     const lessons = require('./controllers/lessonController.js');
-    app.get('/lessons', lessons.pageLessons);
     app.get('/api/lessons', lessons.getLessons);
     app.get('/api/lessons/:id', lessons.getLesson);
     app.get('/api/lessons/teacher/:id', lessons.getLessonsByTeacher);
@@ -28,7 +26,6 @@ module.exports = (app) => {
 
     /**Sheet */
     const sheets = require('./controllers/sheetController.js');
-    app.get('/sheets', sheets.pageSheets);
     app.get('/api/sheets', sheets.getSheets);
     app.get('/api/sheets/:id', sheets.getSheet);
     app.get('/api/sheets/lesson/:lesson', sheets.getSheetsByLesson)
