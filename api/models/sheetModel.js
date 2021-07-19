@@ -10,7 +10,7 @@ class Sheet {
     }
 
     /**
-     * Get all sheets
+     * Récupérer toutes les fiches
      * @param {*} result 
      */
     static getSheets(result) {
@@ -26,7 +26,7 @@ class Sheet {
     }
 
     /**
-     * Get sheets by the id of the lesson
+     * Récupérer les fiches à l'aide de l'identifiant du cours
      * @param {*} lesson_id 
      * @param {*} result 
      */
@@ -43,7 +43,7 @@ class Sheet {
     }
 
     /**
-     * Delete a sheet
+     * Supprimer une fiche
      * @param {*} id 
      * @param {*} result 
      */
@@ -59,7 +59,7 @@ class Sheet {
 
 
     /**
-     * Get a sheet by id
+     * Récupérer une fiche à l'aide de son identifiant
      * @param {*} id 
      * @param {*} result 
      */
@@ -77,7 +77,7 @@ class Sheet {
 
 
     /**
-     * Save a sheet
+     * Sauvegarder une fiche
      * @param {*} result 
      */
     saveSheet(result) {
@@ -91,7 +91,7 @@ class Sheet {
     }
 
     /**
-     * Update a sheet
+     * Modifier une fiche
      * @param {*} id 
      * @param {*} lesson 
      * @param {*} result 
